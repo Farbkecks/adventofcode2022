@@ -12,9 +12,11 @@ class day3{
         }
     }
 
-    private static char findDouble(String halfOne, String halfTow){
+    private static char findDouble(String halfOne, String halfTow,String line){
         for(char i: halfOne.toCharArray()){
-            if(halfTow.indexOf(i) != -1) return halfTow.charAt(halfTow.indexOf(i));
+            if(halfTow.indexOf(i) != -1 && line.indexOf(i) != -1){
+                return halfTow.charAt(halfTow.indexOf(i));
+            }
         }
         return '-';
     }
@@ -23,16 +25,25 @@ class day3{
         File file = new File("./input.txt");		
 		Scanner sc = new Scanner(file);
 
-        String halfOne;
-        String halfTow;
+        String line;
+        String one = "";
+        String tow = "";
+        int count = 0;
         int score = 0;
         
 		while (sc.hasNextLine()){
-            String line = sc.nextLine(); 
-            int half = (int) (line.length() / 2);
-            halfOne = line.substring(0, half);
-            halfTow = line.substring(half, line.length());
-            score += getPriorities(findDouble(halfOne, halfTow));
+            line = sc.nextLine(); 
+            if(count == 0){
+                one = line;
+            }
+            else if(count == 1){
+                tow = line;
+            }
+            else if(count == 2){
+                count = -1;
+                score += getPriorities(findDouble(one, tow, line));
+            }
+            count++;
         }
         System.out.println(score);
     }
