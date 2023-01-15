@@ -5,6 +5,23 @@ import java.util.HashMap;
 
 class day2{
 
+    private static char getSymbole(char computer, char play){
+        if(play == 'Y') return computer;
+        if(play == 'X'){
+            if(computer == 'A') return 'C';
+            if(computer == 'B') return 'A';
+            if(computer == 'C') return 'B';
+        }
+        if(play == 'Z'){
+            if(computer == 'A') return 'B';
+            if(computer == 'B') return 'C';
+            if(computer == 'C') return 'A';
+        }
+        System.out.println("Ein fehelr bei getSymboe");
+        System.exit(1);
+        return '1';
+    }
+
     private static char convert(char i){
         switch(i){
             case 'X': return 'A';
@@ -68,8 +85,8 @@ class day2{
         
 		while (sc.hasNextLine()){
             line = sc.nextLine().toCharArray(); 
-            score += checkWinner(convert(line[2]), line[0]);
-            switch(convert(line[2])){
+            score += checkWinner(getSymbole(line[0],line[2]), line[0]);
+            switch(getSymbole(line[0], line[2])){
                 case 'A': score += 1; break;
                 case 'B': score += 2; break;
                 case 'C': score += 3; break;
@@ -78,6 +95,7 @@ class day2{
                     System.exit(1);
                 }
             }
+            // System.out.println(score);
         }
         System.out.println(score);
     }
